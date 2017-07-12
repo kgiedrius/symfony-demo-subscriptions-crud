@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Subscribers list{% endblock %}
+
+{% block body %}
+    <h2 class="page-header">Subscribers list</h2>
+
+    {% if (subscribers|length > 0) %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name <a href="{{ path('subscribers',{"sort" : "name"}) }}" class="fa {% if sortField == 'name' %} fa-sort-amount-{{ sortDirection }} {% else %} fa-sort {% endif %}"></a></th>
+                <th>Email <a href="{{ path('subscribers',{"sort" : "email"}) }}" class="fa {% if sortField == 'email' %} fa-sort-amount-{{ sortDirection }} {% else %} fa-sort {% endif %}"></a></th>
+                <th>Categories</th>
+                <th>Date <a href="{{ path('subscribers',{"sort" : "created_at"}) }}" class="fa {% if sortField == 'created_at' %} fa-sort-amount-{{ sortDirection }} {% else %} fa-sort {% endif %}"></a></th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in subscribers %}
+                <tr>
+                    <td>{{ item.getName() }}</td>
+                    <td>{{ item.getEmail() }}</td>
+                    <td>
+                        {% for category in item.getCategories() %}
+                        {{ categories[category] }}{% if loop.last == false %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ item.getCreatedAt()|date('Y-m-d H:i:s') }}</td>
+                    <td>
+                        <a href="{{ path('update_subscriber',{"id":item.getId()}) }}" class="btn btn-xs btn-default">Edit</a>
+                        <a onclick="return confirm('Want to delete?')" href="{{ path('delete_subscriber',{"id":item.getId()}) }}" class="btn btn-xs  btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4>No subscribers.</h4>
+    {% endif %}
+
+{% endblock %}
