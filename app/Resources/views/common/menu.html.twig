@@ -1,0 +1,24 @@
+<nav class="navbar navbar-inverse">
+    <div class="container">
+
+        <div id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path("homepage") }}"><i class="fa fa-home"></i> Home</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path("subscribers") }}"><i class="fa fa-list"></i> Subscribers list</a></li>
+                {% endif %}
+                <li><a href="{{ path("create_subscriber") }}" style="color:red"><i class="fa fa-plus"></i> Subscribe to
+                        news</a></li>
+            </ul>
+        </div>
+        <div id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                {% if app.user %}
+                    <li><a href="{{ path("logout") }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{{ path("login") }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
